@@ -37,9 +37,9 @@ Built for the **April 2026 OpenEnv Hackathon (Round 2)**.
 
 | What | Where |
 |------|-------|
-| Hugging Face Space | <!-- TODO: paste HF Space URL here, e.g. https://huggingface.co/spaces/Prathamesh0292/market-rl-env --> |
+| Hugging Face Space | https://huggingface.co/spaces/Prathamesh0292/market-rl-env |
 | Colab training notebook | <!-- TODO: paste public Colab share link here --> |
-| Code repository | <!-- TODO: paste GitHub (or HF Space) repo URL here --> |
+| Code repository | https://huggingface.co/spaces/Prathamesh0292/market-rl-env |
 | Demo video / blog | <!-- TODO: paste YouTube or HF blog URL here --> |
 
 ---
