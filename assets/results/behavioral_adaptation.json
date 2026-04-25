@@ -1,0 +1,43 @@
+{
+  "probe": "behavioral_adaptation",
+  "n_tasks": 50,
+  "policies": {
+    "RandomBot": {
+      "n_observations": 2449,
+      "correlation": 0.0151,
+      "p_value": 0.45642306467867194,
+      "reads_book_pressure": false
+    },
+    "MomentumBot": {
+      "n_observations": 2442,
+      "correlation": -0.0359,
+      "p_value": 0.0763654507517554,
+      "reads_book_pressure": false
+    },
+    "MeanReversionBot": {
+      "n_observations": 2442,
+      "correlation": -0.0395,
+      "p_value": 0.05083697260201908,
+      "reads_book_pressure": false
+    },
+    "MarketMakerBot": {
+      "n_observations": 2448,
+      "correlation": -0.0545,
+      "p_value": 0.006948383906146209,
+      "reads_book_pressure": false
+    },
+    "HoldBaseline": {
+      "n_observations": 2442,
+      "correlation": null,
+      "p_value": null,
+      "reads_book_pressure": false,
+      "note": "constant input \u2014 correlation undefined"
+    },
+    "InformedBot": {
+      "n_observations": 2441,
+      "correlation": -0.0583,
+      "p_value": 0.003987939672632691,
+      "reads_book_pressure": false
+    }
+  }
+}

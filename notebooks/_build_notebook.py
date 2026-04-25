@@ -41,7 +41,7 @@ End-to-end trainer for the Stage 1 LLM agent. Two phases:
 
 1. **SFT warm-start** (~15 min) — fine-tune Qwen2.5-3B on 25k InformedBot
    demonstrations so it learns the JSON action format.
-2. **GRPO** (~6–8 hr) — reinforce profitable actions using a per-action
+2. **GRPO** (~2 hr at 300 steps) — reinforce profitable actions using a per-action
    oracle reward (uses the hidden true_value at training time, never at
    evaluation).
 
@@ -328,7 +328,7 @@ from datasets import Dataset
 from trl import GRPOConfig, GRPOTrainer
 
 # ------------- knobs ------------------------------------------------------
-MAX_GRPO_STEPS = 3000          # set to 50 for a smoke test
+MAX_GRPO_STEPS = 300           # set to 50 for a smoke test
 GRPO_BATCH_SIZE = 4            # prompts per step
 GRPO_GROUP_SIZE = 4            # completions per prompt (K in GRPO)
 PROMPTS_DATASET_SIZE = 1500    # diverse (obs, true_value) pairs

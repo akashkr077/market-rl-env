@@ -1,5 +1,7 @@
 # `training/` — SFT warm-start + GRPO training
 
+> **Stage 1: +0.27 mean PnL on 5-seed smoke test, 100% parse rate, GRPO ran 300 steps in ~2 hr on T4.**
+
 Everything in this folder is **training-time only**. The runtime
 environment server (`market_env/`) does not import any of it, so the
 HF Space image stays slim.
@@ -73,8 +75,8 @@ python -m pytest tests/test_prompts.py tests/test_rollout.py -v
      https://huggingface.co/settings/tokens (only needed if you want to
      push the trained adapter to the Hub)
 3. Run cells top to bottom. The `MAX_GRPO_STEPS` knob in the GRPO cell
-   controls runtime — set it to `50` for a ~2 min smoke test, `3000`
-   for the full Stage 1 run.
+   controls runtime — set it to `50` for a ~2 min smoke test, `300`
+   for the Stage 1 run (~2 hr on A10G).
 
 Outputs land in `/content/drive/MyDrive/market-rl-stage1/`:
 - `sft-checkpoint/` — LoRA adapter after warm-start
