@@ -1,0 +1,37 @@
+# OpenEnv manifest for the Multi-Agent Market RL environment.
+# Mirrors the HF Spaces frontmatter in README.md so OpenEnv tooling can
+# discover the environment without parsing the README.
+
+name: market-rl-env
+version: 0.1.0
+title: Multi-Agent Market RL
+description: >
+  OpenEnv-compliant multi-agent trading environment. A trainable LLM agent
+  trades a single asset on a continuous double-auction order book against
+  scripted bots, each holding a private slice of the asset's true value.
+  The true value is revealed only at episode end and converted to a sparse,
+  clamped scalar reward in [-1, 1] suitable for GRPO.
+
+license: apache-2.0
+sdk: docker
+app_port: 7860
+
+tags:
+  - openenv
+  - multi-agent
+  - reinforcement-learning
+  - theory-of-mind
+  - finance
+  - grpo
+
+# OpenEnv HTTP surface exposed by market_env/server.py
+endpoints:
+  health:  { method: GET,  path: /health }
+  tasks:   { method: GET,  path: /tasks  }
+  reset:   { method: POST, path: /reset  }
+  step:    { method: POST, path: /step   }
+  state:   { method: GET,  path: /state  }
+
+models:
+  observation: market_env.models.MarketObservation
+  action:      market_env.models.MarketAction

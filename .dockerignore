@@ -1,0 +1,53 @@
+# Keep the Docker build context small and reproducible.
+# Anything matched here is NOT shipped to the daemon, so it can't end up
+# in the final image even by accident.
+
+# Python build/cache artifacts
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.egg-info/
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+.tox/
+.mypy_cache/
+.ruff_cache/
+
+# Virtual envs
+.venv/
+venv/
+env/
+.env
+
+# Editor / OS noise
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Git
+.git/
+.gitignore
+.gitattributes
+
+# Repo content not needed at runtime
+tests/
+examples/
+notebooks/
+assets/
+demo/
+training/
+docs/
+
+# Local docs / planning
+planning.md
+milestone.md
+blog.md
+*.pdf
+
+# Build outputs
+build/
+dist/
