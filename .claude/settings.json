@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(pip install *)",
+      "Bash(pytest tests/test_order_book.py -v)",
+      "Bash(python -m pytest tests/test_order_book.py -v)",
+      "Bash(python -m pytest tests/test_order_book.py --cov=market_env.order_book --cov-report=term-missing)",
+      "Bash(python -c \"import pydantic; print\\('pydantic', pydantic.VERSION\\)\")",
+      "Bash(python -m pytest tests/ -v)",
+      "Bash(python -m pytest tests/)",
+      "Bash(python -m examples.run_episode --seed 42 --difficulty medium)",
+      "Bash(python -m pytest tests/ --cov=market_env --cov-report=term-missing)"
+    ]
+  }
+}
