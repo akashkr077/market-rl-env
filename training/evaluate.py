@@ -152,9 +152,8 @@ def _make_trained_policy(checkpoint_path: str) -> Optional[Policy]:
         with torch.no_grad():
             output_ids = model.generate(
                 **inputs,
-                max_new_tokens=80,
-                temperature=0.3,
-                do_sample=True,
+                max_new_tokens=40,
+                do_sample=False,
                 pad_token_id=tokenizer.pad_token_id,
             )
         generated = tokenizer.decode(
@@ -552,13 +551,17 @@ def evaluate(
 
     all_results: list[PolicyMetrics] = []
 
+    n_total = len(eval_tasks)
+
     # Evaluate standard policies (Random, MM, Hold, Trained)
     for policy_name, policy in policies.items():
-        print(f"  evaluating {policy_name} ...", end=" ", flush=True)
+        print(f"  evaluating {policy_name} ...", flush=True)
         t0 = time.time()
         trajs: list[Trajectory] = []
+        running_pnl = 0.0
+        running_wins = 0
 
-        for task in eval_tasks:
+        for idx, task in enumerate(eval_tasks, 1):
             traj = run_episode(
                 env,
                 policy,
@@ -568,18 +571,32 @@ def evaluate(
                 trainable_agent_id="agent_1",
             )
             trajs.append(traj)
+            ep_pnl = traj.reward_breakdown.get("raw_pnl", 0.0)
+            running_pnl += ep_pnl
+            running_wins += 1 if ep_pnl > 0 else 0
+            if idx % 5 == 0 or idx == n_total:
+                avg = running_pnl / idx
+                wr = running_wins / idx
+                elapsed_so_far = time.time() - t0
+                eta = (elapsed_so_far / idx) * (n_total - idx)
+                print(f"    [{idx:>3}/{n_total}]  avg_pnl={avg:+.1f}  "
+                      f"win_rate={wr:.0%}  "
+                      f"elapsed={elapsed_so_far:.0f}s  eta={eta:.0f}s",
+                      flush=True)
 
         elapsed = time.time() - t0
         metrics = _compute_metrics(policy_name, trajs)
         all_results.append(metrics)
-        print(f"done ({elapsed:.1f}s)  avg_pnl={metrics.avg_pnl:.3f}  "
-              f"win_rate={metrics.win_rate:.0%}")
+        print(f"  {policy_name} DONE ({elapsed:.1f}s)  avg_pnl={metrics.avg_pnl:.3f}  "
+              f"win_rate={metrics.win_rate:.0%}\n")
 
     # InformedBot — special handling (needs true_value injection)
-    print("  evaluating InformedBot ...", end=" ", flush=True)
+    print("  evaluating InformedBot ...", flush=True)
     t0 = time.time()
     informed_trajs: list[Trajectory] = []
-    for task in eval_tasks:
+    running_pnl = 0.0
+    running_wins = 0
+    for idx, task in enumerate(eval_tasks, 1):
         traj = _run_informed_baseline(
             env,
             seed=task["seed"],
@@ -587,12 +604,24 @@ def evaluate(
             bot_config=task["bot_config"],
         )
         informed_trajs.append(traj)
+        ep_pnl = traj.reward_breakdown.get("raw_pnl", 0.0)
+        running_pnl += ep_pnl
+        running_wins += 1 if ep_pnl > 0 else 0
+        if idx % 5 == 0 or idx == n_total:
+            avg = running_pnl / idx
+            wr = running_wins / idx
+            elapsed_so_far = time.time() - t0
+            eta = (elapsed_so_far / idx) * (n_total - idx)
+            print(f"    [{idx:>3}/{n_total}]  avg_pnl={avg:+.1f}  "
+                  f"win_rate={wr:.0%}  "
+                  f"elapsed={elapsed_so_far:.0f}s  eta={eta:.0f}s",
+                  flush=True)
 
     elapsed = time.time() - t0
     informed_metrics = _compute_metrics("InformedBot", informed_trajs)
     all_results.append(informed_metrics)
-    print(f"done ({elapsed:.1f}s)  avg_pnl={informed_metrics.avg_pnl:.3f}  "
-          f"win_rate={informed_metrics.win_rate:.0%}")
+    print(f"  InformedBot DONE ({elapsed:.1f}s)  avg_pnl={informed_metrics.avg_pnl:.3f}  "
+          f"win_rate={informed_metrics.win_rate:.0%}\n")
 
     # Sort: InformedBot (upper bound) first, then by avg_pnl descending
     all_results.sort(key=lambda r: r.avg_pnl, reverse=True)
