@@ -30,6 +30,11 @@ training = [
     "matplotlib>=3.9",
     "nbformat>=5.10",
 ]
+dashboard = [
+    "streamlit>=1.38",
+    "plotly>=5.24",
+    "pandas>=2.2",
+]
 
 [tool.setuptools.packages.find]
 where = ["."]

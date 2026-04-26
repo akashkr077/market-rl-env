@@ -6,5 +6,6 @@
 | MarketMakerBot | 44.002 | -29.303 | 115.322 | 0.068 | 76% | 0.0% | 100% |
 | HoldBaseline | 0.000 | 0.000 | 0.000 | -0.020 | 0% | 0.0% | 0% |
 | RandomBot | -121.324 | -203.333 | -47.564 | -0.107 | 22% | 0.0% | 59% |
+| Trained Stage 1 | -147.278 | n/a | n/a | -0.069 | 50% | 0.0% | 100% |
 
 *50 eval episodes per policy, medium difficulty, eval bot composition (incl. InformedBot)*

@@ -1,0 +1,30 @@
+{
+  "SFT": {
+    "avg_pnl": -304.58750000000066,
+    "avg_reward": -0.2151750967772703,
+    "win_rate": 0.3,
+    "parse_fail_rate": 0.0,
+    "participation": 0.766
+  },
+  "GRPO-200": {
+    "avg_pnl": -161.170999999997,
+    "avg_reward": -0.04805163301497488,
+    "win_rate": 0.5,
+    "parse_fail_rate": 0.0,
+    "participation": 1.0
+  },
+  "GRPO-250": {
+    "avg_pnl": -23.72949999999946,
+    "avg_reward": 0.04846565903704752,
+    "win_rate": 0.55,
+    "parse_fail_rate": 0.0,
+    "participation": 1.0
+  },
+  "GRPO-300 (final)": {
+    "avg_pnl": -168.2454999999981,
+    "avg_reward": -0.05014703297211003,
+    "win_rate": 0.5,
+    "parse_fail_rate": 0.0,
+    "participation": 1.0
+  }
+}
